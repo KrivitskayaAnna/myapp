@@ -18,7 +18,7 @@ pipeline {
                     chmod 755 /tmp/jenkins-minikube
                 '''
 
-                git url: 'https://github.com/romo0208/mydataapp.git', branch: 'master'
+                git url: 'https://github.com/KrivitskayaAnna/myapp.git', branch: 'master'
             }
         }
 
