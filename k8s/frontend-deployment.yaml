@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: mydataapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: frontend-app_frontend:latest # Замените на ваш образ фронтенда
+        imagePullPolicy: Never  
+        ports:
+        - containerPort: 80
+        env:
+        - name: REACT_APP_BACKEND_URL
+          value: "http://backend-service:8085"
+#        readinessProbe:
+#          httpGet:
+#            path: /
+#            port: 80
+#          initialDelaySeconds: 10
+#          periodSeconds: 5
+#      livenessProbe:
+#          httpGet:
+#            path: /
+#            port: 80
+#          initialDelaySeconds: 15
+#          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: mydataapp
+spec:
+  selector:
+    app: frontend
+  ports:
+  - port: 80
+    targetPort: 80

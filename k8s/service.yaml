@@ -1,0 +1,9 @@
+# service.yaml - для совместимости с nginx.conf для docker-compose
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend  # Имя, которое ищет ваш фронтенд
+  namespace: mydataapp
+spec:
+  type: ExternalName
+  externalName: backend-service.mydataapp.svc.cluster.local
