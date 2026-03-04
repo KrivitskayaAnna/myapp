@@ -53,7 +53,7 @@ pipeline {
 
                     sh '''
                         # Build directly in minikube (this is the key fix)
-                        minikube image build -t frontend-app_frontend:latest ./frontend-app
+                        minikube image build -t frontend-app-frontend:latest ./frontend-app
 
                         # Verify
                         minikube image ls | grep frontend
@@ -72,10 +72,14 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        kubectl apply -f k8s/
+                        # Apply namespace first
+                        kubectl apply -f k8s/mydataapp-namespace.yaml
 
-                        # Wait for deployments
+                        # Wait for namespace to be ready
                         sleep 30
+
+                        # Apply all other resources
+                        kubectl apply -f k8s/ --recursive || true
 
                         # Show status
                         kubectl get all -n mydataapp
@@ -83,6 +87,11 @@ pipeline {
                         # Get service URLs
                         echo "Services:"
                         minikube service list -n mydataapp
+
+                        #After all, open minikube dashboard, check services in mydatapp are run and run
+                        # kubectl port-forward -n mydataapp svc/backend-service 8085:8085
+                        # kubectl port-forward -n mydataapp svc/frontend-service 8080:80
+                        # the backend and frontend are now available from localhost ports 8085 and 8080
                     '''
                 }
             }

@@ -5,12 +5,12 @@ metadata:
   namespace: mydataapp
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
-  tls:
-  - hosts:
-    - mydataapp.app
-    secretName: mydataapp-tls
+#  tls:
+#  - hosts:
+#    - mydataapp.app
+#    secretName: mydataapp-tls
   rules:
   - host: mydataapp.app
     http:

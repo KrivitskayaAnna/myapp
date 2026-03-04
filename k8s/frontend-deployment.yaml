@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: frontend-app_frontend:latest # Замените на ваш образ фронтенда
+        image: frontend-app-frontend:latest
         imagePullPolicy: Never  
         ports:
         - containerPort: 80
